@@ -1,0 +1,29 @@
+{
+  "type": "comb",
+  "title": "Testing And Gate",
+  "groups": [
+    {
+      "label": "Group 1",
+      "inputs": [
+        {
+          "label": "inp1",
+          "bitWidth": 1,
+          "values": ["0","0","1","1"]
+        },
+        {
+          "label": "inp2",
+          "bitWidth": 1,
+          "values": ["0","1","0","1"]
+        }
+      ],
+      "outputs": [
+        {
+          "label": "out1",
+          "bitWidth": 1,
+          "values": ["0","0","0","1"]
+        }
+      ],
+      "n": 4
+    }
+  ]
+}

@@ -377,7 +377,7 @@ export default function startListeners() {
         }
     });
 
-    // 'drag and drop' event listener for subcircuit elements in layout mode 
+    // 'drag and drop' event listener for subcircuit elements in layout mode
     $('#subcircuitMenu').on('dragstop', '.draggableSubcircuitElement', function(event, ui){
         const sideBarWidth = $('#guide_1')[0].clientWidth;
         let tempElement;
@@ -385,14 +385,14 @@ export default function startListeners() {
         if( ui.position.top > 10 && ui.position.left > sideBarWidth){
             // make a shallow copy of the element with the new coordinates
             tempElement = globalScope[this.dataset.elementName][this.dataset.elementId];
-            
+
             // Changing the coordinate doesn't work yet, nodes get far from element
             tempElement.x = ui.position.left - sideBarWidth;
             tempElement.y = ui.position.top;
             for(let node of tempElement.nodeList){
                 node.x = ui.position.left - sideBarWidth;
                 node.y = ui.position.top
-            } 
+            }
 
             tempBuffer.subElements.push(tempElement);
             this.parentElement.removeChild(this);
@@ -447,8 +447,8 @@ export default function startListeners() {
                             }
                         }
                     }
-                } 
-            }   
+                }
+            }
         }
     if(!finalResult.length) searchResults.text('No elements found ...');
     else {
@@ -555,13 +555,9 @@ function resizeTabs() {
 window.addEventListener('resize', resizeTabs);
 resizeTabs();
 
-$(() => {
-    $('[data-toggle="tooltip"]').tooltip();
-});
-
 // direction is only 1 or -1
 function handleZoom(direction) {
-    
+
     var zoomSlider = $('#customRange1');
     var currentSliderValue = parseInt(zoomSlider.val(), 10);
     currentSliderValue += direction;

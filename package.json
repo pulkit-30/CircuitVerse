@@ -4,6 +4,7 @@
   "repository": "git@github.com:CircuitVerse/CircuitVerse.git",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "build:docs": "jsdoc simulator/src/* -c conf.json -t ./node_modules/better-docs",
     "watch:doc-src": "npx nodemon --exec 'npm run build:docs' --watch simulator/src/",
     "watch:doc-output": "npx livereload out",
@@ -23,12 +24,15 @@
     "eslint-plugin-import": "^2.24.2",
     "expose-loader": "^3.1.0",
     "husky": ">=6",
+    "identity-obj-proxy": "^3.0.0",
     "jsdoc": "3.6.9",
     "lint-staged": ">=12",
     "livereload": "^0.9.3",
     "nodemon": "^2.0.12"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@hotwired/stimulus": "^3.0.1",
     "@tarekraafat/autocomplete.js": "^10.2.6",
@@ -47,6 +51,7 @@
     "esbuild-plugin-sass": "^1.0.1",
     "esbuild-rails": "^1.0.3",
     "file-loader": "^6.2.0",
+    "jest": "^27.5.1",
     "jquery": "^3.6.0",
     "jquery-resizable-dom": "^0.35.0",
     "jquery-ujs": "^1.2.3",

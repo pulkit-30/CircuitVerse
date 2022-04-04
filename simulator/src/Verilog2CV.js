@@ -224,7 +224,7 @@ export function setupCodeMirrorEnvironment() {
         editor.setOption('theme', prevtheme);
     }
 
-    // editor.setValue("// Write Some Verilog Code Here!")
+    editor.setValue("// Write Some Verilog Code Here!")
     setTimeout(function() {
         editor.refresh();
     },1);

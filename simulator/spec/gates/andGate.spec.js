@@ -13,7 +13,7 @@ import CodeMirror from 'codemirror';
 jest.mock('codemirror');
 
 describe('And Gate Testing', () => {
-    CodeMirror.fromTextArea.mockResolvedValue({});
+    CodeMirror.fromTextArea.mockReturnValueOnce({ setValue: (text) => {} });
     setup();
 
     test('load circuitData', () => {

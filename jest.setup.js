@@ -12,6 +12,7 @@ window.restrictedElements = [];
 window.userSignedIn = true;
 window.embed = false;
 
+import Array from "./simulator/src/arrayHelpers";
 window['Array'] = Array;
 
 const fs = require('fs');

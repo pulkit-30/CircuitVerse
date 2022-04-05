@@ -47,7 +47,7 @@ gem "jquery-rails"
 
 gem "carrierwave", "~> 2.2"
 
-gem "rails_admin", "~> 2.2"
+gem "rails_admin", "~> 3.0"
 
 # gem 'cancancan', '~>2.0'
 

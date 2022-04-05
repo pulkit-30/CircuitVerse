@@ -1,0 +1,197 @@
+{
+  "name": "Test",
+  "timePeriod": 500,
+  "clockEnabled": true,
+  "projectId": "6QvVgf832b4jtAICn3nN",
+  "focussedCircuit": 58977270155,
+  "orderedTabs": [
+    "58977270155"
+  ],
+  "scopes": [
+    {
+      "layout": {
+        "width": 100,
+        "height": 60,
+        "title_x": 50,
+        "title_y": 13,
+        "titleEnabled": true
+      },
+      "verilogMetadata": {
+        "isVerilogCircuit": false,
+        "isMainCircuit": false,
+        "code": "// Write Some Verilog Code Here!",
+        "subCircuitScopeIds": []
+      },
+      "allNodes": [
+        {
+          "x": 10,
+          "y": 0,
+          "type": 1,
+          "bitWidth": 1,
+          "label": "",
+          "connections": [
+            3
+          ]
+        },
+        {
+          "x": 10,
+          "y": 0,
+          "type": 1,
+          "bitWidth": 1,
+          "label": "",
+          "connections": [
+            4
+          ]
+        },
+        {
+          "x": 10,
+          "y": 0,
+          "type": 0,
+          "bitWidth": 1,
+          "label": "",
+          "connections": [
+            5
+          ]
+        },
+        {
+          "x": -10,
+          "y": -10,
+          "type": 0,
+          "bitWidth": 1,
+          "label": "",
+          "connections": [
+            0
+          ]
+        },
+        {
+          "x": -10,
+          "y": 10,
+          "type": 0,
+          "bitWidth": 1,
+          "label": "",
+          "connections": [
+            1
+          ]
+        },
+        {
+          "x": 30,
+          "y": 0,
+          "type": 1,
+          "bitWidth": 1,
+          "label": "",
+          "connections": [
+            2
+          ]
+        }
+      ],
+      "id": 58977270155,
+      "name": "Main",
+      "Input": [
+        {
+          "x": 440,
+          "y": 0,
+          "objectType": "Input",
+          "label": "inp1",
+          "direction": "RIGHT",
+          "labelDirection": "LEFT",
+          "propagationDelay": 0,
+          "customData": {
+            "nodes": {
+              "output1": 0
+            },
+            "values": {
+              "state": 0
+            },
+            "constructorParamaters": [
+              "RIGHT",
+              1,
+              {
+                "x": 0,
+                "y": 20,
+                "id": "Q7f60JmvDvp05Ch4qbuj"
+              }
+            ]
+          }
+        },
+        {
+          "x": 440,
+          "y": 20,
+          "objectType": "Input",
+          "label": "inp2",
+          "direction": "RIGHT",
+          "labelDirection": "LEFT",
+          "propagationDelay": 0,
+          "customData": {
+            "nodes": {
+              "output1": 1
+            },
+            "values": {
+              "state": 0
+            },
+            "constructorParamaters": [
+              "RIGHT",
+              1,
+              {
+                "x": 0,
+                "y": 40,
+                "id": "XPnUeEzPSA7cuxN0Zfq0"
+              }
+            ]
+          }
+        }
+      ],
+      "Output": [
+        {
+          "x": 670,
+          "y": 10,
+          "objectType": "Output",
+          "label": "out1",
+          "direction": "LEFT",
+          "labelDirection": "RIGHT",
+          "propagationDelay": 0,
+          "customData": {
+            "nodes": {
+              "inp1": 2
+            },
+            "constructorParamaters": [
+              "LEFT",
+              1,
+              {
+                "x": 100,
+                "y": 20,
+                "id": "45xKKG8gaHxVQRpH1ior"
+              }
+            ]
+          }
+        }
+      ],
+      "NandGate": [
+        {
+          "x": 560,
+          "y": 10,
+          "objectType": "NandGate",
+          "label": "",
+          "direction": "RIGHT",
+          "labelDirection": "LEFT",
+          "propagationDelay": 10,
+          "customData": {
+            "constructorParamaters": [
+              "RIGHT",
+              2,
+              1
+            ],
+            "nodes": {
+              "inp": [
+                3,
+                4
+              ],
+              "output1": 5
+            }
+          }
+        }
+      ],
+      "restrictedCircuitElementsUsed": [],
+      "nodes": []
+    }
+  ]
+}

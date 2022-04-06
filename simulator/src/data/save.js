@@ -12,6 +12,7 @@ import {layoutModeGet, toggleLayoutMode} from '../layoutMode';
 import {verilogModeGet} from '../Verilog2CV';
 import domtoimage from 'dom-to-image';
 import C2S from '../../vendor/canvas2svg';
+import { promptDialog } from '../dialog/promptDialog';
 
 var projectName = undefined;
 
@@ -75,7 +76,8 @@ export function generateSaveData(name) {
     data = {};
 
     // Prompts for name, defaults to Untitled
-    name = getProjectName() || name || prompt('Enter Project Name:') || 'Untitled';
+    name = getProjectName() || name;
+    if (!name) return;
     data.name = stripTags(name);
     setProjectName(data.name);
 
@@ -285,7 +287,7 @@ async function generateImageForOnline() {
         var baseHeight = Math.round(baseWidth / ratio);
         $(node).css('height', baseHeight);
         $(node).css('width', baseWidth);
-        
+
         var data = await domtoimage.toJpeg(node);
         $(node).css('width', prevWidth);
         $(node).css('height', prevHeight);
@@ -313,7 +315,7 @@ async function generateImageForOnline() {
     // Restores Focus
     globalScope.centerFocus(false);
     return data;
-    
+
 }
 /**
  * Function called when you save acircuit online
@@ -329,7 +331,33 @@ export default async function save() {
     $('.loadingIcon').fadeIn();
     const data = generateSaveData();
 
-    const projectName = getProjectName();
+    const projectName = (getProjectName());
+    if (!projectName) {
+        $('.loadingIcon').fadeOut();
+        promptDialog('Enter Project Name', 'Untitled');
+        $('#promptDialog').dialog({
+            buttons: [{
+                text: 'cancel',
+                click() {
+                    // to close the dialog
+                    $('#promptDialog').dialog('close');
+                },
+            },
+            {
+                text: 'confirm',
+                click() {
+                    const name = stripTags($('#promptInput').val());
+                    if (name) {
+                        setProjectName(name);
+                        setTimeout(save, 1000);
+                    }
+                    // to close the dialog
+                    $('#promptDialog').dialog('close');
+                },
+            }],
+        });
+        return;
+    }
     var imageData = await generateImageForOnline();
 
     if (!userSignedIn) {

@@ -34,6 +34,7 @@ import { changeClockEnable } from './sequential';
 import { changeInputSize } from './modules';
 import { verilogModeGet, verilogModeSet } from './Verilog2CV';
 import { updateTestbenchUI } from './testbench';
+import { promptDialog } from './dialog/promptDialog';
 
 export const circuitProperty = {
     toggleLayoutMode, setProjectName, changeCircuitName, changeClockTime, deleteCurrentCircuit, changeClockEnable, changeInputSize, changeLightMode,
@@ -132,12 +133,32 @@ function deleteCurrentCircuit(scopeId = globalScope.id) {
  * Wrapper function around newCircuit to be called from + button on UI
  */
 export function createNewCircuitScope() {
-    const scope = newCircuit();
-    if (!embed) {
-        showProperties(simulationArea.lastSelected);
-        updateTestbenchUI();
-        plotArea.reset();
-    }
+    promptDialog('Enter circuit name:', 'Untitled-Circuit');
+    $('#promptDialog').dialog({
+        buttons: [
+            {
+                text: 'cancel',
+                click() {
+                    // to close the dialog
+                    $('#promptDialog').dialog('close');
+                },
+            },
+            {
+                text: 'confirm',
+                click() {
+                    const name = stripTags($('#promptInput').val());
+                    const scope = newCircuit(name);
+                    if (!embed) {
+                        showProperties(simulationArea.lastSelected);
+                        updateTestbenchUI();
+                        plotArea.reset();
+                    }
+                    // to close the dialog
+                    $('#promptDialog').dialog('close');
+                },
+            },
+        ],
+    });
 }
 
 /**
@@ -150,8 +171,6 @@ export function createNewCircuitScope() {
 export function newCircuit(name, id, isVerilog = false, isVerilogMain = false) {
     if (layoutModeGet()) { toggleLayoutMode(); }
     if (verilogModeGet()) { verilogModeSet(false);}
-    name = name || prompt('Enter circuit name:','Untitled-Circuit');
-    name = stripTags(name);
     if (!name) return;
     const scope = new Scope(name);
     if (id) scope.id = id;
@@ -189,7 +208,7 @@ export function newCircuit(name, id, isVerilog = false, isVerilogMain = false) {
                 document.getElementById('circname').select();
             }, 100);
         });
-        
+
         $('.tabsCloseButton').on('click',function (e) {
             e.stopPropagation();
             deleteCurrentCircuit(this.id);
@@ -199,7 +218,7 @@ export function newCircuit(name, id, isVerilog = false, isVerilogMain = false) {
         }
         dots(false);
     }
-    
+
     return scope;
 }
 
@@ -247,7 +266,7 @@ export default class Scope {
         this.oy = 0;
         this.scale = DPR;
         this.stack = [];
-        
+
         this.initialize();
 
         // Setting default layout

@@ -349,7 +349,7 @@ export default async function save() {
                     const name = stripTags($('#promptInput').val());
                     if (name) {
                         setProjectName(name);
-                        setTimeout(save, 1000);
+                        save();
                     }
                     // to close the dialog
                     $('#promptDialog').dialog('close');

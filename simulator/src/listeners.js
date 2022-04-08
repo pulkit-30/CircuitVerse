@@ -20,14 +20,13 @@ import {
 } from './engine';
 import { changeScale, findDimensions } from './canvasApi';
 import { scheduleBackup } from './data/backupCircuit';
-import {
-    hideProperties, deleteSelected, uxvar, fullView, createElement
-} from './ux';
+import { hideProperties, deleteSelected, uxvar, fullView, exitFullView } from './ux';
 import {
     updateRestrictedElementsList, updateRestrictedElementsInScope, hideRestricted, showRestricted,
 } from './restrictedElementDiv';
 import { removeMiniMap, updatelastMinimapShown } from './minimap';
 import undo from './data/undo';
+import redo from "./data/redo";
 import { copy, paste, selectAll } from './events';
 // Import save from './data/save';
 import { verilogModeGet } from './Verilog2CV';
@@ -336,11 +335,18 @@ export default function startListeners() {
         undo();
     });
 
-    $('#viewButton').on('click', () => {
+    $('#redoButton').on('click',() => {
+        redo();
+    })
+    $('#viewButton').on('click',() => {
         fullView();
     });
 
-    $('#projectName').on('click', () => {
+    $(document).on('keyup', (e) => {
+        if (e.key === "Escape") exitFullView();
+    });
+
+    $('#projectName').on('click',() => {
         simulationArea.lastSelected = globalScope.root;
         setTimeout(() => {
             document.getElementById('projname').select();
@@ -437,8 +443,15 @@ export default function startListeners() {
             simulationArea.controlDown = true;
         }
 
-        if (simulationArea.controlDown && e.key.charCodeAt(0) == 122) { // Detect the special CTRL-Z code
+
+        if (simulationArea.controlDown && e.key.charCodeAt(0) == 122 && !simulationArea.shiftDown) { // detect the special CTRL-Z code
             undo();
+        }
+        if (simulationArea.controlDown && e.key.charCodeAt(0) == 122 && simulationArea.shiftDown) { // detect the special Cmd + shift + z code (macOs)
+            redo();
+        }
+        if (simulationArea.controlDown && e.key.charCodeAt(0) == 121 && !simulationArea.shiftDown) { // detect the special ctrl + Y code (windows)
+            redo();
         }
 
         if (listenToSimulator) {
@@ -756,22 +769,35 @@ export default function startListeners() {
         }
 
         let htmlIcons = '';
-        const result = elementPanelList.filter((ele) => ele.toLowerCase().includes(value));
-        if (!result.length) {
-            searchResults.text('No elements found ...');
-        } else {
-            result.forEach((e) => {
-                // eslint-disable-next-line no-use-before-define
-                htmlIcons += createIcon(e);
-            });
-            searchResults
-                .html(htmlIcons);
-            $('.filterElements').mousedown(createElement);
+
+        const result = elementPanelList.filter(ele => ele.toLowerCase().includes(value));
+        var finalResult = [];
+        for(const j in result) {
+            if (Object.prototype.hasOwnProperty.call(result, j)) {
+                for (const category in elementHierarchy) {
+                     if(Object.prototype.hasOwnProperty.call(elementHierarchy, category)) {
+                        const categoryData = elementHierarchy[category];
+                         for (let i = 0; i < categoryData.length; i++) {
+                             if(result[j] == categoryData[i].label) {
+                                 finalResult.push(categoryData[i]);
+                            }
+                        }
+                    }
+                }
+            }
         }
+    if(!finalResult.length) searchResults.text('No elements found ...');
+    else {
+        finalResult.forEach( e => htmlIcons += createIcon(e));
+        searchResults
+          .html(htmlIcons);
+        $('.filterElements').mousedown(createElement);
+    }
     });
+
     function createIcon(element) {
-        return `<div class="${element} icon logixModules filterElements" id="${element}" title="${element}">
-            <img  src= "/img/${element}.svg" >
+        return `<div class="${element.name} icon logixModules filterElements" id="${element.name}" title="${element.label}">
+            <img  src= "/img/${element.name}.svg" alt="element's image" >
         </div>`;
     }
 
@@ -850,12 +876,18 @@ resizeTabs();
 $(() => {
     $('[data-toggle="tooltip"]').tooltip();
 });
-// Direction is only 1 or -1
-function handleZoom(direction) {
-    if (globalScope.scale > 0.5 * DPR) {
-        changeScale(direction * 0.1 * DPR);
-    } else if (globalScope.scale < 4 * DPR) {
-        changeScale(direction * 0.1 * DPR);
+
+// direction is only 1 or -1
+function handleZoom(direction) {
+
+    var zoomSlider = $('#customRange1');
+    var currentSliderValue = parseInt(zoomSlider.val(), 10);
+    currentSliderValue += direction;
+
+    if (globalScope.scale > 0.5 * DPR) {
+        zoomSlider.val(currentSliderValue).change();
+    } else if (globalScope.scale < 4 * DPR) {
+        zoomSlider.val(currentSliderValue).change();
     }
 
     gridUpdateSet(true);

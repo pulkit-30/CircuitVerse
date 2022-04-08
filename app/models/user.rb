@@ -34,6 +34,9 @@ class User < ApplicationRecord
   after_commit :create_members_from_invitations, on: :create
 
   has_attached_file :profile_picture, styles: { medium: "205X240#", thumb: "100x100>" }, default_url: ":style/Default.jpg"
+  attr_accessor :remove_picture
+  
+  before_validation { profile_picture.clear if remove_picture == "1" }
 
   # validations for user
 
@@ -69,8 +72,9 @@ class User < ApplicationRecord
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(email: data["email"]).first
+    name = data["name"] || data["nickname"]
     # Uncomment the section below if you want users to be created if they don't exist
-    user ||= User.create(name: data["name"],
+    user ||= User.create(name: name,
                          email: data["email"],
                          password: Devise.friendly_token[0, 20],
                          provider: access_token.provider,
@@ -99,7 +103,7 @@ class User < ApplicationRecord
   end
 
   def flipper_id
-    "User;#{id}"
+    "User:#{id}"
   end
 
   def moderator?

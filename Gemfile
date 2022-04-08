@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "acts_as_votable", "~> 0.13.1"
+gem "acts_as_votable", "~> 0.13.2"
 gem "aws-sdk-rails"
 gem "dotenv-rails", groups: %i[development test]
 gem "hirb"
@@ -16,15 +16,14 @@ gem "omniauth-facebook"
 gem "omniauth-github"
 gem "omniauth-google-oauth2"
 gem "omniauth-microsoft-office365"
-gem "paperclip", ">= 5.2.0"
+gem "kt-paperclip"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 6.0"
+gem "rails", "~> 6.1.4"
 # Use Puma as the app server
-gem "puma", "~> 5.2"
+gem "puma", "~> 5.6"
 # Use SCSS for stylesheets
-gem "sass-rails", "~> 5.0"
-# Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 1.3.0"
+gem "sass-rails", "~> 6.0"
+gem 'terser'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -37,7 +36,7 @@ gem "jbuilder", "~> 2.11"
 
 gem "devise"
 
-gem "commontator", "~> 6.3.0"
+gem "commontator", "~> 6.3.2"
 
 # To generate sitemap.xml
 gem "sitemap_generator"
@@ -46,9 +45,9 @@ gem "jquery-rails"
 
 # gem 'acts_as_votable', '~> 0.11.1'
 
-gem "carrierwave", "~> 2.1"
+gem "carrierwave", "~> 2.2"
 
-gem "rails_admin", "~> 2.1"
+gem "rails_admin", "~> 2.2"
 
 # gem 'cancancan', '~>2.0'
 
@@ -57,11 +56,10 @@ gem "sidekiq"
 gem "sunspot_rails"
 
 # For home page pagination
-gem "will_paginate", "~> 3.3.0"
+gem "will_paginate", "~> 3.3.1"
 gem "will_paginate-bootstrap"
 
-gem "bootstrap-typeahead-rails"
-gem "country_select", "~> 4.0"
+gem "country_select", "~> 6.0"
 gem "geocoder"
 
 # for authorization layer
@@ -71,8 +69,12 @@ gem "pundit"
 gem "ahoy_matey"
 gem "i18n-js"
 
+# for lti provider
+gem "ims-lti", "~> 1.2", "< 2.0"
+
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
+gem 'redis', '~> 4.6'
+gem 'hiredis'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -83,38 +85,35 @@ gem "http"
 
 # Database
 
-gem "pg", "~> 1.2.3"
+gem "pg", "~> 1.3.4"
 
 gem "meta-tags"
 
 # Notifications
 gem "activity_notification"
-gem "serviceworker-rails"
 gem "webpush"
-
-gem "webpacker", "~> 5.x"
 
 gem "bootsnap", require: false
 
 gem "font-awesome-sass", "~> 5.13.1"
 
 gem "disposable_mail", "~> 0.1"
-gem "fast_jsonapi"
+gem 'jsonapi-serializer'
 gem "flipper-redis"
 gem "flipper-ui"
-gem "friendly_id", "~> 5.4.1"
+gem "friendly_id", "~> 5.4.2"
 gem "inline_svg"
 gem "jwt"
-gem "rails-i18n", "~> 6.0.0"
+gem "rails-i18n", "~> 7.0.1"
 gem "recaptcha"
-gem "simple_discussion", "~> 1.2"
+gem "simple_discussion", "~> 1.3"
 gem 'strong_migrations'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   # Adds support for Capybara system testing and selenium driver
-  gem "coveralls"
+  gem 'coveralls_reborn', '~> 0.23.1', require: false
   gem "erb_lint", require: false
   gem "factory_bot_rails"
   gem "faker"
@@ -122,22 +121,22 @@ group :development, :test do
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
-  gem "rspec-rails", "~> 5.0"
+  gem "rspec-rails", "~> 5.1"
 end
 
 group :test do
-  gem "capybara", "~> 3.33"
+  gem "capybara", "~> 3.36"
   gem "json-schema"
   gem "rspec_junit_formatter"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
-  gem "webdrivers", "~> 4.0"
+  gem 'webdrivers', '~> 5.0', require: false
   gem "webmock"
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "listen", ">= 3.0.5", "< 3.4"
+  gem "listen", ">= 3.0.5", "< 3.8"
   gem "web-console", ">= 3.3.0"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "rails-erd"
@@ -153,12 +152,19 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 # mails
 gem "premailer-rails", "~> 1.11", ">= 1.11.1"
 
-gem "bugsnag", "~> 6.18"
+gem "bugsnag", "~> 6.24"
 
-gem "invisible_captcha", "~> 1.1"
+gem "invisible_captcha", "~> 2.0"
 
-gem "newrelic_rpm", "~> 6.13"
+gem "newrelic_rpm", "~> 8.5"
 
-gem "oj", "~> 3.11"
+gem "oj", "~> 3.13"
 
-gem "hairtrigger", "~> 0.2.24"
+gem "hairtrigger", "~> 0.2.25"
+
+# Used for rate limiting
+gem "rack-attack"
+
+gem "jsbundling-rails", "~> 1.0"
+
+gem "stimulus-rails", "~> 1.0"

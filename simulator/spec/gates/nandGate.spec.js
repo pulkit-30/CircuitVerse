@@ -17,7 +17,6 @@ describe('Nand Gate Testing', () => {
         expect(() => load(circuitData)).not.toThrow();
     });
     test('Run All tests', () => {
-        load(circuitData);
         const result = runAll(testData.nandGate, globalScope);
         expect(result.summary.passed).toBe(4);
     });

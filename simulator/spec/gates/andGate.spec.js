@@ -20,7 +20,6 @@ describe('And Gate Testing', () => {
         expect(() => load(circuitData)).not.toThrow();
     });
     test('Run All tests', () => {
-        load(circuitData);
         const result = runAll(testData.AndGate, globalScope);
         expect(result.summary.passed).toBe(4);
     });

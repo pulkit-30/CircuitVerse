@@ -593,7 +593,7 @@ GEM
     sunspot_rails (2.5.0)
       rails (>= 3)
       sunspot (= 2.5.0)
-    sunspot_solr (2.5.0)
+    sunspot_solr (2.6.0)
     swagger-blocks (3.0.0)
     sync (0.5.0)
     term-ansicolor (1.7.1)

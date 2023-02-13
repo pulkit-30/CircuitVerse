@@ -80,7 +80,7 @@ gem "ims-lti", "~> 1.2", "< 2.0"
 
 # Use Redis adapter to run Action Cable in production
 gem "hiredis"
-gem "redis", "~> 4.6"
+gem "redis", "~> 4.8"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
